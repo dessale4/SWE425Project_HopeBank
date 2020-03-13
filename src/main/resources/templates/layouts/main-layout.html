@@ -8,6 +8,7 @@
             rel="stylesheet"
             integrity="sha384-LV/SIoc08vbV9CCeAwiz7RJZMI5YntsH8rGov0Y2nysmepqMWVvJqds6y0RaxIXT"
             crossorigin="anonymous">
+            <link type="text/css" rel="stylesheet" th:href="@{/css/main-styles.css}"/>
     <title>Title</title>
 </head>
 <body>
@@ -16,9 +17,7 @@
 
     <div layout:fragment="content"></div><!-- here content is a placeholder for representing this file in the individual html files that use this layout -->
     
-    <div th:replace="fragments/footer :: footer"><!-- implies, go to fragments/footer file and put the content of the footer fragment from it to this div elemnt -->
-
-
+    <div th:replace="fragments/footer :: footer"></div><!-- implies, go to fragments/footer file and put the content of the footer fragment from it to this div elemnt -->
 
 
 	

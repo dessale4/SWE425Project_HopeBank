@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main-layout}">
+<head>
+
+<meta charset="ISO-8859-1">
+
+<title>User - Details</title>
+</head>
+<body>
+
+	<div class="container" layout:fragment="content">
+		<h3><span th:text="${user.firstName}"></span> Details <span style="float:right;">
+                <a class="btn btn-outline-primary btn-lg" th:href="@{/accounts/new/{id}(id=${user.userId})}">Open an account</a>
+            </span></h3><!-- <span style="align: right"><a  class="btn btn-primary">Open an account</a></span> -->
+		<div>
+            <!-- <span style="font-size: 1.5em">List of Products in stock</span> -->
+            <!-- <span style="float:right;">
+                <a class="btn btn-outline-primary btn-lg" href="/accounts/new">Open an account</a>
+            </span> -->
+        </div>
+		<hr/>
+	</div>
+	
+</body>
+</html>

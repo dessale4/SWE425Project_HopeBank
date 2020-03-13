@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main-layout}">
+<head>
+<meta charset="UTF-8">
+<title>AccountType add form</title>
+</head>
+<body>
+
+	<div class="container" layout:fragment="content">
+		<h1>AccountType Add Form</h1>
+		<hr />
+		<form th:action="@{/accountTypes/new}" th:object="${accountType}"
+			method="post">
+			<span th:if="${#fields.hasErrors('*')}" th:errors="*{*}" class="text-danger"></span>
+			
+			<div class="form-group row">
+				<label for="accountTypeName" class="col-sm-2 col-form-label">Account Type Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="accountTypeName"
+						name="accountTypeName">
+						<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span> -->
+				</div>
+			</div>
+			
+			<div class="form-group row">
+				<div class="col-sm-10">
+					<button type="submit" class="btn btn-primary">Add</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
