@@ -7,9 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(name= "accounts", uniqueConstraints = @UniqueConstraint(columnNames = {"account_Type", "account_User"}))
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +21,12 @@ public class Account {
 	
 	private Double balance;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_Type", nullable = false)
 	private AccountType accountType;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name= "user_id")
+	@JoinColumn(name= "account_User")
 	private User accountUser;
 
 	public Account() {

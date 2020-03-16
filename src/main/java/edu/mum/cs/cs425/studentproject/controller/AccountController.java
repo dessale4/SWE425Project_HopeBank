@@ -53,10 +53,18 @@ public class AccountController {
 			System.out.println("Account creation failed");
 			return "redirect:/accounts/new/" + id;
 		}
-//		model.addAttribute("account", new Account());
 		accountService.addAccount(account);
 		System.out.println("Account created successfully");
 		return "redirect:/accounts/new/" + id;
 		
+	}
+	@GetMapping("/list")
+	public String allAcounts(Model model) {
+		List<Account> accountList = accountService.getAllAccountList();
+		
+		model.addAttribute("accounts", accountList);
+		model.addAttribute("accountCount", accountList.size());
+		model.addAttribute("bankLiquidity", accountService.getBankLiquidity());
+		return "account/accountList";
 	}
 }

@@ -11,30 +11,42 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table(name="users")
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long userId;
 	
+	@NotNull(message = "please insert a valid value to userNumber field")
 	private Long userNumber;
 	
+	@NotBlank(message ="please insert a valid value to firstName field")
 	private String firstName;
 	
+	@NotBlank(message ="please insert a valid value to middleName field")
 	private String middleName;
 	
+	@NotBlank(message ="please insert a valid value to lastName field")
 	private String lastName;
 	
+	@Email(message ="please insert a valid value to emailAddress field")
 	private String emailAddress;
 	
+	@NotBlank(message ="please insert a valid value to contactPhoneNumber field")
 	private String contactPhoneNumber;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	
+	@NotNull(message ="accountUser can not be null")
 	@OneToMany(mappedBy = "accountUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Account> userAccounts = new ArrayList<Account>();
 
