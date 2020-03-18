@@ -13,4 +13,5 @@ public interface AccountService {
 	public Double getBankLiquidity();
 	public Integer assignAccountNumber();
 	public List<UserAccountDetail> findUserAccontDetails(Long userId);
+	public Account getAccountById(Long accountId);
 }

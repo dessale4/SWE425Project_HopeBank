@@ -58,4 +58,10 @@ public class AccountServiceImpl implements AccountService{
 		return accountRepository.findUserAccontDetails(userId);
 	}
 
+	@Override
+	public Account getAccountById(Long accountId) {
+		
+		return accountRepository.getOne(accountId);
+	}
+
 }
