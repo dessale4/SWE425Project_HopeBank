@@ -16,23 +16,6 @@
 				<a class="btn btn-outline-primary btn-lg" th:href="@{/users/new}">Add a User</a>
          	</span>
           </h1>
-		<!-- Search panel -->
-			<!-- <form id="searchStudentForm" method="get" action = "#" th:action="@{/students/student/search}">
-				<div style="margin-top: 1em;" class="row">
-					<div class="col-md-12">
-						<div class="input-group">
-							<input type="text" class="form-control" id="searchString"
-								name="searchString"
-								placeholder="Enter a string to search for books"
-								th:value="${searchString}" autofocus />
-							<div class="input-group-append">
-								<button id="btnSubmit" type="submit"
-									class="btn btn-outline-success">Search</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form> -->
 		<hr />
 		<table class="table table-striped">
 			<thead>
@@ -60,13 +43,13 @@
                         <td th:text="${user.emailAddress}"></td>
                         <td th:text="${user.contactPhoneNumber}"></td>
                         <td th:text="${user.dateOfBirth}"></td>
-                         <td class = "btn-primary"><a th:href="@{/users/details/{id}(id=${user.userId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i>Details</a></td>
+                        <td class = "btn-primary"><a th:href="@{/users/details/{id}(id=${user.userId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i>Details</a></td>
                        <td class = "btn-primary"><a th:href="@{/users/edit/{id}(id=${user.userId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i>Edit</a></td>
                        
                         <td class = "btn-danger"><a th:href="@{/users/delete/{id}(id=${user.userId})}" class="btn btn-primary" onclick ="if(!(confirm('Are you sure you want to delete  ')))return false"><i class="fas fa-user-times ml-2"></i>Delete</a></td>
                     </tr>
                     <tr th:if="${usersCount < 1}">
-                        <td colspan="6" style="text-align: center;">No Users available</td>
+                        <td colspan="12" style="text-align: center;">No Users available</td>
                     </tr>
 			</tbody>
 		</table>

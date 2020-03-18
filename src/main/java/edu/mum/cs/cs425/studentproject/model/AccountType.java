@@ -18,7 +18,6 @@ public class AccountType {
 	
 
 	@NotBlank(message = "please accountTypeName can not be blank")
-	@NotEmpty(message = "accountTypeName is a required field")
 	@Column(name="account_type_name", unique = true)
 	private String accountTypeName;
 

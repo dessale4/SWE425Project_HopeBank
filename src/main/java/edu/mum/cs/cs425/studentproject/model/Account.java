@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name= "accounts", uniqueConstraints = @UniqueConstraint(columnNames = {"account_Type", "account_User"}))
@@ -17,8 +18,10 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long accountId;
 	
-	private Long accountNumber;
+	@NotNull(message = "account number is a required field")
+	private Integer accountNumber;
 	
+	@NotNull(message ="balance field is a required field")
 	private Double balance;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -41,11 +44,11 @@ public class Account {
 		this.accountId = accountId;
 	}
 
-	public Long getAccountNumber() {
+	public Integer getAccountNumber() {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(Long accountNumber) {
+	public void setAccountNumber(Integer accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 

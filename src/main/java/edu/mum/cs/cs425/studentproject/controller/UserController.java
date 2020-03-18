@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.mum.cs.cs425.studentproject.model.AccountType;
 import edu.mum.cs.cs425.studentproject.model.User;
+import edu.mum.cs.cs425.studentproject.model.util.UserAccountDetail;
+import edu.mum.cs.cs425.studentproject.service.AccountService;
 import edu.mum.cs.cs425.studentproject.service.UserService;
 
 @Controller
@@ -25,9 +28,14 @@ public class UserController {
 	
 	@Autowired 
 	UserService userService;
+	
+	@Autowired
+	AccountService accountService;
+	
 	@GetMapping("/new")
 	public String displayUserForm(Model model) {
 		model.addAttribute("user", new User());
+		model.addAttribute("newUserNumber", userService.assignUserNumber());
 		return "user/new";
 	}
 	
@@ -47,14 +55,6 @@ public class UserController {
 		List<User> usersList = userService.findAllUsers();
 		model.addAttribute("users", usersList);
 		model.addAttribute("usersCount", usersList.size());
-//		
-//		LocalDate today = LocalDate.now(); 
-////		LocalDate lastYear = LocalDate.of(year, month, dayOfMonth)
-//		System.out.println(today.getYear());
-//		for(User u: usersList) {
-//			Period p = Period.between(u.getDateOfBirth(), today);
-//			System.out.println(p.getYears());
-//		}
 		
 		return ("user/list");
 	}
@@ -88,8 +88,11 @@ public class UserController {
 	}
 	@GetMapping("/details/{userId}")
 	public String userDetail(@PathVariable("userId") Long id, Model model) {
-		User user = userService.findUserById(id);
+		User user = userService.findUserById(id);// will be edited later to be combined with UserAccountDetail util instance
 		model.addAttribute("user", user);
+		List<UserAccountDetail> accountTypes = accountService.findUserAccontDetails(id);
+		model.addAttribute("userAccountTypes", accountTypes);
+		model.addAttribute("accountTypeCount", accountTypes.size());
 		return ("user/details");
 	}
 	

@@ -26,7 +26,7 @@ public class User {
 	private Long userId;
 	
 	@NotNull(message = "please insert a valid value to userNumber field")
-	private Long userNumber;
+	private Integer userNumber;
 	
 	@NotBlank(message ="please insert a valid value to firstName field")
 	private String firstName;
@@ -62,11 +62,11 @@ public class User {
 		this.userId = userId;
 	}
 
-	public Long getUserNumber() {
+	public Integer getUserNumber() {
 		return userNumber;
 	}
 
-	public void setUserNumber(Long userNumber) {
+	public void setUserNumber(Integer userNumber) {
 		this.userNumber = userNumber;
 	}
 

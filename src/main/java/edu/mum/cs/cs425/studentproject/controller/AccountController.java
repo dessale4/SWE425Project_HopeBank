@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +42,7 @@ public class AccountController {
 		model.addAttribute("account", new Account());
 		model.addAttribute("user", accountUser);
 		model.addAttribute("accountTypes", accountTypes);
+		model.addAttribute("newAccountNumber", accountService.assignAccountNumber());
 		
 		return "account/new";
 		
@@ -50,12 +52,30 @@ public class AccountController {
 	public String addAccount(@PathVariable("userId") Long id,  @ModelAttribute("account") @Valid Account account, BindingResult result, Model model) {
 		
 		if(result.hasErrors()) {
-			System.out.println("Account creation failed");
-			return "redirect:/accounts/new/" + id;
+			User accountUser = userService.findUserById(id);
+			List<AccountType> accountTypes = accountTypeService.allAccountTypes();
+			model.addAttribute("account", account);
+			model.addAttribute("user", accountUser);
+			model.addAttribute("accountTypes", accountTypes);
+			model.addAttribute("newAccountNumber", accountService.assignAccountNumber());
+			return "account/new";
 		}
-		accountService.addAccount(account);
-		System.out.println("Account created successfully");
-		return "redirect:/accounts/new/" + id;
+		try {
+			accountService.addAccount(account);
+		}catch(Exception ex) {
+
+			System.out.println("Account creation failed");
+			ObjectError error = new ObjectError("error", "You already have a " + account.getAccountType().getAccountTypeName());
+			result.addError(error);
+			User accountUser = userService.findUserById(id);
+			List<AccountType> accountTypes = accountTypeService.allAccountTypes();
+			model.addAttribute("account", account);
+			model.addAttribute("user", accountUser);
+			model.addAttribute("accountTypes", accountTypes);
+			model.addAttribute("newAccountNumber", accountService.assignAccountNumber());
+			return "account/new";
+		}
+		return "redirect:/users/details/" + id;
 		
 	}
 	@GetMapping("/list")

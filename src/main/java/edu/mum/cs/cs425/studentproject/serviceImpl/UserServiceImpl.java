@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.mum.cs.cs425.studentproject.model.Account;
 import edu.mum.cs.cs425.studentproject.model.User;
 import edu.mum.cs.cs425.studentproject.repository.UserRepository;
 import edu.mum.cs.cs425.studentproject.service.UserService;
@@ -55,6 +56,14 @@ public class UserServiceImpl implements UserService{
 									Period.between(user.getDateOfBirth(), LocalDate.now()).getYears()<40).
 									collect(Collectors.toList());
 		return adultUsersList;
+	}
+	@Override
+	public Integer assignUserNumber() {
+		Integer baseUserNumber = 100;
+		List<User>  userList = findAllUsers();
+		Integer  userListSize = userList.size();
+		Integer lastUserNumber = userListSize == 0? 0 : userList.get(userListSize-1).getUserNumber();
+		return lastUserNumber ==0? baseUserNumber: lastUserNumber+1;// return the next user number for new user
 	}
 	
 }

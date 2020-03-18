@@ -13,36 +13,38 @@
 		<hr />
 		<form th:action="@{/accounts/new/{id}(id=${user.userId})}" th:object="${account}"
 			method="post">
+			<!-- <input type="hidden"  th:field="*{accountId}"/> -->
+			<!-- <input type="hidden"  name="accountId" th:value="${accountId}"/> -->
 			<input type="hidden" class="form-control" id="accountUser" name="accountUser" th:value = "${user.userId}">
+			<input type="hidden" class="form-control" id="accountNumber" name="accountNumber" th:value = "${newAccountNumber}">
+			<input type="hidden" class="form-control" id="balance" name="balance" th:value="0">
 			<span th:if="${#fields.hasErrors('*')}" th:errors="*{*}"
 				class="text-danger"></span>
-
+<!-- 
 			<div class="form-group row">
 				<label for="accountNumber" class="col-sm-2 col-form-label">Account
 					Number</label>
 				<div class="col-sm-10">
-					<input type="number" class="form-control" id="accountNumber"
-						name="accountNumber">
-					<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span> -->
+					
+					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
 				</div>
 			</div>
-			<!-- style="display:none;" -->
+			style="display:none;"
 			<div  class="form-group row">
 				<label for="balance" class="col-sm-2 col-form-label">Account
 					Balance</label>
 				<div class="col-sm-10">
-					<input type="float" class="form-control" id="balance"
-						name="balance" th:value="0">
-					<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span> -->
+					
+					<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
 				</div>
 			</div>
-			
+			 -->
 			<div class="form-group">
-				<label for="supplier">User:</label> 
+				<label for="supplier">Account Type:</label> 
 				<!-- <span
 					th:if="${#fields.hasErrors('supplier')}" th:errors="*{supplier}"
 					class="alert alert-danger"></span>  -->
-					<select name="accountType" id="accountType" class="form-control" required="required">
+					<select name="accountType" id="accountType" class="form-control" ><!-- required="required" -->
 					<option value="">Select accountType</option>
 					<option th:if="${account.accountType == null}"
 						th:each="accountType : ${accountTypes}"

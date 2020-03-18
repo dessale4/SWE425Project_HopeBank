@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/main-layout}">
 <head>
 
@@ -12,17 +12,75 @@
 <body>
 
 	<div class="container" layout:fragment="content">
-		<h3><span th:text="${user.firstName}"></span> Details <span style="float:right;">
-                <a class="btn btn-outline-primary btn-lg" th:href="@{/accounts/new/{id}(id=${user.userId})}">Open an account</a>
-            </span></h3>
-		<div>
-            <!-- <span style="font-size: 1.5em">List of Products in stock</span> -->
-            <!-- <span style="float:right;">
-                <a class="btn btn-outline-primary btn-lg" href="/accounts/new">Open an account</a>
-            </span> -->
-        </div>
-		<hr/>
+		<h3>
+			User <span
+				style="float: right;"> <a
+				class="btn btn-outline-primary btn-lg"
+				th:href="@{/accounts/new/{id}(id=${user.userId})}">Open an
+					account</a>
+			</span>
+		</h3>
+		
+		<hr />
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">User Number</th>
+					<th scope="col">First Name</th>
+					<th scope="col">Middle Name</th>
+					<th scope="col">Last Name</th>
+					<th scope="col">Email Address</th>
+					<th scope="col">Contact Phone Number</th>
+					<th scope="col">Date of Birth</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${user.userNumber}"></td>
+					<td th:text="${user.firstName}"></td>
+					<td th:text="${user.middleName}"></td>
+					<td th:text="${user.lastName}"></td>
+					<td th:text="${user.emailAddress}"></td>
+					<td th:text="${user.contactPhoneNumber}"></td>
+					<td th:text="${user.dateOfBirth}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>Accounts
+			<span th:if = "${error}">
+				<span>Error occurred</span>
+			</span>
+			<span
+				style="float: right;"> 
+				 <a class="btn btn-outline-primary btn-lg"
+					th:href="@{/transactions/deposit/{id}(id=${user.userId})}">Make a Deposit</a>
+					
+				 <a class="btn btn-outline-primary btn-lg"
+					th:href="@{/accounts/new/{id}(id=${user.userId})}">Send Money</a>
+				
+				<a	class="btn btn-outline-primary btn-lg"
+					th:href="@{/accounts/new/{id}(id=${user.userId})}">Transfer Money</a>
+				
+			</span>
+		</h3>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Account Type</th>
+					<th scope="col">Account Balance</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each = "detail : ${userAccountTypes}" >
+					<td th:text="${detail.actType.accountTypeName}"></td>
+					<td th:text="${detail.account.balance}"></td>
+				</tr>
+				<tr th:if="${accountTypeCount < 1}">
+					<td colspan="12" style="text-align: center;">No accounts yet</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	
+
 </body>
 </html>
