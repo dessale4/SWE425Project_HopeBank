@@ -13,6 +13,9 @@
 		<hr />
 		<form th:action="@{/accounts/new/{id}(id=${user.userId})}" th:object="${account}"
 			method="post">
+			
+			<span th:if="${error}" th:text="${error}" class="text-danger" ></span><!-- will be triggered by transfer money operation -->
+			
 			<!-- <input type="hidden"  th:field="*{accountId}"/> -->
 			<!-- <input type="hidden"  name="accountId" th:value="${accountId}"/> -->
 			<input type="hidden" class="form-control" id="accountUser" name="accountUser" th:value = "${user.userId}">

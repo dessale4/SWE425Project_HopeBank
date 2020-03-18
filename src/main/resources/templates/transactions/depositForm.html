@@ -14,16 +14,16 @@
 		<form th:action="@{/transactions/deposit/{id}(id=${account.accountId})}" th:object="${account}"
 			method="post">
 			<span th:if="${#fields.hasErrors('*')}" th:errors="*{*}" class="text-danger"></span>
+			
 			<input type="hidden"  name="accountId" th:value="${account.accountId}"/>
 			<input type="hidden"  name="accountNumber" th:value="${account.accountNumber}"/>
-			<!-- <input type="hidden"  name="accountType" th:value="${account.accountType}"/>
-			<input type="hidden"  name="accountUser" th:value="${account.accountUser}"/> -->
+			
 			<div class="form-group row">
 				<label for="balance" class="col-sm-2 col-form-label">Amount</label>
 				<div class="col-sm-10">
 					<input type="float" class="form-control" id="balance"
-						name="balance" ><!-- required -->
-						<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span> -->
+						name="balance" required>
+						
 				</div>
 			</div>
 			

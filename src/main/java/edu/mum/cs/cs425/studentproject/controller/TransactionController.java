@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.cs.cs425.studentproject.model.Account;
-import edu.mum.cs.cs425.studentproject.model.User;
 import edu.mum.cs.cs425.studentproject.model.util.UserAccountDetail;
 import edu.mum.cs.cs425.studentproject.service.AccountService;
 import edu.mum.cs.cs425.studentproject.service.TransactionService;
@@ -37,17 +36,16 @@ public class TransactionController {
 	AccountService accountService;
 	
 	@GetMapping("/deposit/{userId}")
-	public String getDepositForm(@PathVariable("userId") Long id, Model model, RedirectAttributes redirectAttributes) {
+	public String displayDepositForm(@PathVariable("userId") Long id, Model model, RedirectAttributes redirectAttributes) {
 		List <UserAccountDetail> userAccountDetails = accountService.findUserAccontDetails(id);
 		
 		Account checkingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, "Checking Account");
 		
 		if(checkingAccount == null) {
-			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account to make a deposit");
+			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account");
 			return "redirect:/users/details/" + id;
 		}
 		
-		System.out.println(checkingAccount.getAccountType().getAccountTypeName());
 		model.addAttribute("account", checkingAccount);
 		return "transactions/depositForm";
 	}
@@ -68,4 +66,69 @@ public class TransactionController {
 		
 	}
 	
+	@GetMapping("/transfer/{userId}")
+	public String displayTransferForm(@PathVariable("userId") Long id, Model model, RedirectAttributes redirectAttributes) {
+		List <UserAccountDetail> userAccountDetails = accountService.findUserAccontDetails(id);
+		
+		Account checkingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, "Checking Account");
+		
+		if(checkingAccount == null) {
+			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account");
+			return "redirect:/users/details/" + id;
+		}
+		model.addAttribute("userId", id);
+		return "transactions/transferForm";
+	}
+	
+	@PostMapping("/transfer")
+	public String transferMoney(Model model, RedirectAttributes redirectAttributes, 
+			@RequestParam("accountType") String accountType, @RequestParam("userId") Long userId, 
+			@RequestParam("amount") Double amount) {
+		List <UserAccountDetail> userAccountDetails = accountService.findUserAccontDetails(userId);
+		
+		Account checkingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, "Checking Account");
+		Account recievingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, accountType);
+		
+		if(checkingAccount == null) {
+			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account");
+			return "redirect:/users/details/" + userId;
+		} 
+		
+		if(recievingAccount == null) {
+			redirectAttributes.addFlashAttribute("error", "You don't have a " + accountType + " to make a transfer");
+			return "redirect:/accounts/new/" + userId;
+		}
+		if(amount > checkingAccount.getBalance()) {
+			redirectAttributes.addFlashAttribute("error", "You don't have enough balance for this transfer try with less amount");
+			return "redirect:/transactions/transfer/" + userId;
+		}
+		
+		Double updatedCheckingAccountBalance = checkingAccount.getBalance() - amount;
+		checkingAccount.setBalance(updatedCheckingAccountBalance);
+		accountService.addAccount(checkingAccount);
+		
+		Double updatedRecievingAccountBalance;
+		if(accountType.equals("Loan Account")) {
+			updatedRecievingAccountBalance = recievingAccount.getBalance() - amount;
+		}else {
+			updatedRecievingAccountBalance = recievingAccount.getBalance() + amount;
+		}
+		recievingAccount.setBalance(updatedRecievingAccountBalance);
+		accountService.addAccount(recievingAccount);
+		return "redirect:/users/details/" + userId;
+	}
+	
+	@GetMapping("/send/{userId}")
+	public String displaySendForm(@PathVariable("userId") Long id, Model model, RedirectAttributes redirectAttributes) {
+		List <UserAccountDetail> userAccountDetails = accountService.findUserAccontDetails(id);
+		
+		Account checkingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, "Checking Account");
+		
+		if(checkingAccount == null) {
+			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account");
+			return "redirect:/users/details/" + id;
+		}
+		
+		return "transactions/sendForm";
+	}
 }
