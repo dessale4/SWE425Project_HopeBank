@@ -43,7 +43,7 @@ public class UserController {
 	public String addUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
 		model.addAttribute("user", user);
 		if(result.hasErrors()) {
-			
+			model.addAttribute("newUserNumber", user.getUserNumber());
 			return "user/new";
 		}
 		userService.addUser(user);
