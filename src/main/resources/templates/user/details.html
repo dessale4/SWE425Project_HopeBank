@@ -13,7 +13,22 @@
 
 	<div class="container" layout:fragment="content">
 		
-		<h3>User</h3>
+		<h3>User
+			<span style="float: right;"> 
+				<a class="btn btn-outline-primary btn-lg"
+				th:href="@{/accounts/new/{id}(id=${user.userId})}">Open an Account</a>
+				
+				 <a class="btn btn-outline-primary btn-lg"
+					th:href="@{/transactions/deposit/{id}(id=${user.userId})}">Make a Deposit</a>
+					
+				 <!-- <a class="btn btn-outline-primary btn-lg"
+					th:href="@{/transactions/send/{id}(id=${user.userId})}">Send Money</a> -->
+				
+				<a	class="btn btn-outline-primary btn-lg"
+					th:href="@{/transactions/transfer/{id}(id=${user.userId})}">Transfer Money</a>
+				
+			</span>
+		</h3>
 		
 		<hr />
 		<table class="table table-striped">
@@ -62,20 +77,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<span style="float: right;"> 
-				<a class="btn btn-outline-primary btn-lg"
-				th:href="@{/accounts/new/{id}(id=${user.userId})}">Open an Account</a>
-				
-				 <a class="btn btn-outline-primary btn-lg"
-					th:href="@{/transactions/deposit/{id}(id=${user.userId})}">Make a Deposit</a>
-					
-				 <a class="btn btn-outline-primary btn-lg"
-					th:href="@{/transactions/send/{id}(id=${user.userId})}">Send Money</a>
-				
-				<a	class="btn btn-outline-primary btn-lg"
-					th:href="@{/transactions/transfer/{id}(id=${user.userId})}">Transfer Money</a>
-				
-			</span>
+		
 	</div>
 
 </body>

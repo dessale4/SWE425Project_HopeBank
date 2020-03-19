@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.mum.cs.cs425.studentproject.model.Account;
+import edu.mum.cs.cs425.studentproject.model.Transaction;
 import edu.mum.cs.cs425.studentproject.model.util.UserAccountDetail;
 import edu.mum.cs.cs425.studentproject.service.AccountService;
 import edu.mum.cs.cs425.studentproject.service.TransactionService;
@@ -60,8 +61,13 @@ public class TransactionController {
 		Account originalAccount = accountService.getAccountById(id);
 		Double originalBalance = originalAccount.getBalance();
 		Double newBalance = originalBalance + inputBalance;
+		
+		Transaction transaction = new Transaction(originalAccount, originalAccount, inputBalance, "Deposit");
+		transactionService.addTransaction(transaction);
+
 		originalAccount.setBalance(newBalance);
 		accountService.addAccount(originalAccount);
+		
 		return "redirect:/users/details/" + originalAccount.getAccountUser().getUserId();
 		
 	}
@@ -71,6 +77,7 @@ public class TransactionController {
 		List <UserAccountDetail> userAccountDetails = accountService.findUserAccontDetails(id);
 		
 		Account checkingAccount = transactionService.findAccountByAccountTypeName(userAccountDetails, "Checking Account");
+		
 		
 		if(checkingAccount == null) {
 			redirectAttributes.addFlashAttribute("error", "Firstly you need to open a Checking Account");
@@ -103,6 +110,10 @@ public class TransactionController {
 			return "redirect:/transactions/transfer/" + userId;
 		}
 		
+
+		Transaction transaction = new Transaction(checkingAccount, recievingAccount, amount, "Transfer");
+		transactionService.addTransaction(transaction);
+		
 		Double updatedCheckingAccountBalance = checkingAccount.getBalance() - amount;
 		checkingAccount.setBalance(updatedCheckingAccountBalance);
 		accountService.addAccount(checkingAccount);
@@ -130,5 +141,13 @@ public class TransactionController {
 		}
 		
 		return "transactions/sendForm";
+	}
+	
+	@GetMapping("/list")
+	public String transactionList(Model model) {
+		List<Transaction> transactionList = transactionService.getAllTransactions();
+		model.addAttribute("transactions", transactionList);
+		model.addAttribute("transactionCount", transactionList.size());
+		return "transactions/list";
 	}
 }

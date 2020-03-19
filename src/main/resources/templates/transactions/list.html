@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main-layout}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Transaction List</title>
+</head>
+<body>
+	<div class="container" layout:fragment="content">
+		<h1>List of all Transactions
+          </h1>
+		
+		<hr />
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Source Account</th>
+					<th scope="col">Destination Account</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Transaction Reason</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="transaction, iter : ${transactions}">
+                        <th scope="row" th:text="${iter.count}"></th>
+                        <td th:text="${transaction.from.accountId}"></td>
+                        <td th:text="${transaction.to.accountId}"></td>
+                     	<td th:text="${transaction.amount}"></td>
+                        <td th:text="${transaction.reason}"></td>
+                    </tr>
+                    <tr th:if="${transactionCount < 1}">
+                        <td colspan="6" style="text-align: center;">No Transactions so far</td>
+                    </tr>
+			</tbody>
+		</table> 
+	</div>
+
+</body>
+</html>

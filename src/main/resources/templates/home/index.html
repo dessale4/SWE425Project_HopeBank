@@ -1,153 +1,23 @@
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/main-layout}">
 <head>
-
 <meta charset="ISO-8859-1">
 
-<title>HopeBank - Home</title>
-	 <style>
-        .container {
-           margin-left: 1%;
-            margin-right: 1%;
-            position: relative;
-            width: 800px;
-            max-width: 1200px;
-        }
-
-        .container img {
-            width: 1200px;
-            height: auto;
-        }
-
-        .container .button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            font-size: 16px;
-
-        }
-        .container .btn {
-            position: absolute;
-            top: 70%;
-            left: 70%;
-            transform: translate(-60%, -60%);
-            -ms-transform: translate(-60%, -60%);
-            font-size: 16px;
-
-        }
-
-        .button  {
-            padding: 15px 25px;
-            font-size: 24px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
-            width: 200px;
-            transition: all 0.5s;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .btn  {
-            padding: 20px 25px;
-            font-size: 24px;
-            text-align: center;
-            cursor: pointer;
-            outline: none;
-            color: #fff;
-            background-color: #ff6f1e;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
-            width: 200px;
-            transition: all 0.5s;
-            cursor: pointer;
-            margin: 5px;
-        }
-
-        .button span {
-            cursor: pointer;
-            display: inline-block;
-            position: relative;
-            transition: 0.5s;
-        }
-        .btn span {
-            cursor: pointer;
-            display: inline-block;
-            position: relative;
-            transition: 0.5s;
-        }
-
-        .button span:after {
-            content: '\00bb';
-            position: absolute;
-            opacity: 0;
-            top: 0;
-            right: -20px;
-            transition: 0.5s;
-        }
-        .btn span:after {
-            content: '\00bb';
-            position: absolute;
-            opacity: 0;
-            top: 0;
-            right: -20px;
-            transition: 0.5s;
-        }
-
-        .button:hover span {
-            padding-right: 25px;
-        }
-        .btn:hover span {
-            padding-right: 25px;
-        }
-        .btn:hover span:after {
-            opacity: 1;
-            right: 0;
-        }
-        .button:hover span:after {
-            opacity: 1;
-            right: 0;
-        }
-
-        </style>
+<title>hopebank - Home</title>
 </head>
 <body>
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="mb-auto">
-        <div class="mb-auto">
-
-
-            <nav class="nav nav-masthead justify-content-center float-md-center">
-                <h3   style="color: darkblue">Welcome To Hope Bank</h3>
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">About</a>
-            </nav>
-        </div>
-    </header>
-
-<hr/>
-
-<div class="container">
-<!--    <img src="https://images.unsplash.com/photo-1462206092226-f46025ffe607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="Snow" style="width:100%">-->
-    <img  width="100%" src="https://images.unsplash.com/photo-1462206092226-f46025ffe607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="rounded" alt="...">
-
-    <a href="/loginuser/signin">  <button name="signin" class="button"><span> login </span></button></a>
-
-  <a href="/accounts/new">  <button name="signup" class="btn"><span> apply </span></button></a>
-</div>
-</div>
-	
+	<div class="container" layout:fragment="content">
+		<h3>Welcome to HopeBank</h3>
+		<hr />
+		<div >
+			<img width="100%" 
+				src="https://images.unsplash.com/photo-1462206092226-f46025ffe607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+				class="rounded" alt="..."> 
+		</div>
+	</div>
 </body>
 </html>
