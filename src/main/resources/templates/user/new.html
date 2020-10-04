@@ -4,12 +4,12 @@
 	layout:decorate="~{layouts/main-layout}">
 <head>
 <meta charset="UTF-8">
-<title>User add form</title>
+<title>Register</title>
 </head>
 <body>
 
 	<div class="container" layout:fragment="content">
-		<h1>User Add Form</h1>
+		<h1>Customer Registration Form</h1>
 		<hr />
 		<form th:action="@{/users/new}" th:object="${user}" method="post">
 		
